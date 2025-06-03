@@ -6,9 +6,11 @@ import spacy
 import nltk
 from nltk.tokenize import sent_tokenize
 
-nlp = spacy.load("en_core_web_sm") 
-# nlp = spacy.blank("en") #for English
-# nlp = spacy.blank("ge") #for german
+nlp = spacy.load("en_core_web_sm")  #less accurate pipeline for words
+# nlp = spacy.load("en_core_web_trf")  #more accurate and heavy piepline used in NLP
+# nlp = spacy.blank("en") #for blank English pipeline
+# nlp = spacy.blank("ge") #for  blank german pipeline
+
 #Goto spacy language model on google too get more languages
 
 # text = "Dr. Strange loves pav bhaji of mumbai as it costs only 2$ per plate"
@@ -58,22 +60,49 @@ text=' '.join(text) #converting array to a single line
 # tokens=[token.text for token in doc2]
 # print(tokens) #printing all the base words from the text
 
+####################################EXERCISE###################
 
-text='''
-Look for data to help you address the question. Governments are good
-sources because data from public research is often freely available. Good
-places to start include http://www.data.gov/, and http://www.science.
-gov/, and in the United Kingdom, http://data.gov.uk/.
-Two of my favorite data sets are the General Social Survey at http://www3.norc.org/gss+website/, 
-and the European Social Survey at http://www.europeansocialsurvey.org/.
-'''
 
-doc=nlp(text)
-data_website=[token.text for token in doc if token.like_url]
-print(data_website)
+# text='''
+# Look for data to help you address the question. Governments are good
+# sources because data from public research is often freely available. Good
+# places to start include http://www.data.gov/, and http://www.science.
+# gov/, and in the United Kingdom, http://data.gov.uk/.
+# Two of my favorite data sets are the General Social Survey at http://www3.norc.org/gss+website/, 
+# and the European Social Survey at http://www.europeansocialsurvey.org/.
+# '''
 
-transactions = "Tony gave two $ to Peter, Bruce gave 500 € to Steve"
-doc2=nlp(transactions)
-for token in doc2:
-    if token.like_num and doc2[token.i+1].is_currency:
-        print(token,doc[token.i+1].text)
+
+# doc=nlp(text)
+# data_website=[token.text for token in doc if token.like_url]
+# print(data_website)
+
+# transactions = "Tony gave two $ to Peter, Bruce gave 500 € to Steve"
+# doc2=nlp(transactions)
+# for token in doc2:
+#     if token.like_num and doc2[token.i+1].is_currency:
+#         print(token,doc[token.i+1].text)
+
+##################################### EXERCISE #######################
+
+
+################## NLP building pipeline #########################
+
+# Part of Speech and lemmatization(Base words) ############
+# print(nlp.pipe_names)  #to print the components inside a pipeline
+# doc=nlp("gimme double cheese extra large healthy pizza for eating")
+# for token in doc:
+#     print(token , " | ", token.pos_ , " | ", token.lemma_) #printing the partofspeech and base words(lemmatizing)
+
+
+##### Name Entity Recognition (NER) ################
+# text=nlp("Tesla Inc is going to acquire twitter for $45 billion")
+# for ent in text.ents:
+#     print(ent.text, " | ",ent.label_," | ", spacy.explain(ent.label_))
+
+# ####### creating pipeline only with NER component ###########
+# source_nlp=spacy.load("en_core_web_sm")
+
+# nlp=spacy.blank("en")
+# nlp.add_pipe("ner",source=source_nlp)
+# print(nlp.pipe_names) #pipeline with only NER(Name Entity Recognition) component
