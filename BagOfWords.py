@@ -24,6 +24,7 @@ X_train_cv=v.fit_transform(X_train.values)
 # print(X_train_cv)
 print(X_train_cv.shape)
 print(X_train_cv.toarray()[:2][0])
-print(v.get_feature_names_out()[36525])
+print(v.get_feature_names_out()[11207])
+# print(v.vocabulary_)
 # print(v.vocabulary_)
 
